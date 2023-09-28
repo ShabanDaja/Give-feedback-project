@@ -4,7 +4,7 @@ const formEl = document.querySelector('.form');
 const feedbackListEl = document.querySelector('.feedbacks');
 const submitBtnEl = document.querySelector('.submit-btn');
 const MAX_CHARS = 150;
-
+const spinnerEl = document.querySelector('.spinner');
 
 // COUNTER
 const inputHandler = () => {
@@ -90,6 +90,9 @@ formEl.addEventListener('submit', submitHandler);
 fetch('https://bytegrad.com/course-assets/js/1/api/feedbacks')
     .then(response => response.json())
     .then(data => {
+
+        //remove spinner
+        spinnerEl.remove();
 
         data.feedbacks.forEach(feedbackItem => {
             
