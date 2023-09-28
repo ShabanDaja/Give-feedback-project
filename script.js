@@ -3,12 +3,13 @@ const counterEl = document.querySelector('.counter');
 const formEl = document.querySelector('.form');
 const feedbackListEl = document.querySelector('.feedbacks');
 const submitBtnEl = document.querySelector('.submit-btn');
+const MAX_CHARS = 150;
 
 
 // COUNTER
 const inputHandler = () => {
     // max number of characters
-    const maxNrchars = 150;
+    const maxNrchars = MAX_CHARS;
     
     // number of characters currently typed
     const nrCharsTyped = textareaEl.value.length;
@@ -23,6 +24,15 @@ const inputHandler = () => {
 textareaEl.addEventListener('input', inputHandler);
 
 // SUBMIT 
+const showIndicator = textCheck => {
+
+    const className = textCheck === 'valid' ? 'form--valid' : 'form--invalid';
+
+    formEl.classList.add(className);
+        setTimeout(() => {
+           formEl.classList.remove(className);
+        }, 2000);
+}
 const submitHandler = event => {
     //prevent default browser action
     event.preventDefault();
@@ -32,15 +42,9 @@ const submitHandler = event => {
     
     // Validate text (#hashtag is present and text is long enough)
     if (text.includes('#') && text.length > 4) {
-        formEl.classList.add('form--valid');
-        setTimeout(() => {
-           formEl.classList.remove('form--valid') 
-        }, 2000);
+        showIndicator('valid');
     } else {
-        formEl.classList.add('form--invalid');
-        setTimeout(() => {
-            formEl.classList.remove('form--invalid') 
-         }, 2000);
+        showIndicator('invalid');
 
          textareaEl.focus();
          
@@ -76,7 +80,7 @@ const submitHandler = event => {
     // Clear text area after i click submit and blur it
     textareaEl.value = '';
     submitBtnEl.blur();
-    counterEl.textContent = '150';
+    counterEl.textContent = MAX_CHARS;
 };
 
 formEl.addEventListener('submit', submitHandler);
